@@ -223,7 +223,34 @@ class MainActivity : AppCompatActivity() {
             }
         })
         del.setOnClickListener({
-
+            var size = lhs.length-1
+            var size2 = rhs.length-1
+            if(rhs === "" && lhs != "")
+            {
+                var temp_lhs = ""
+                for (i in 0..size)
+                {
+                    temp_lhs += lhs[i]
+                }
+                lhs = temp_lhs
+            }
+            else if (rhs != "")
+            {
+                var temp_rhs = ""
+                for (i in 0..size2)
+                {
+                    temp_rhs += lhs[i]
+                }
+                rhs = temp_rhs
+            }
+            var s3 = final.length-1
+            var final_temp = ""
+            for(j in 0..s3)
+            {
+                final_temp = final[j].toString()
+            }
+            final = final_temp
+            exp.setText(final)
         })
         ac.setOnClickListener({
             exp.setText("")
