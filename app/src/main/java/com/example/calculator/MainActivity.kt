@@ -23,243 +23,156 @@ class MainActivity : AppCompatActivity() {
         final = ""
 
         one.setOnClickListener({
-            if(op === "")
-            {
-                lhs += "1"
-            }
-            else
-            {
-                rhs += "1"
-            }
-            final += "1"
-            exp.setText(final)
+            setNumber("1")
         })
         two.setOnClickListener({
-            if(op === "")
-            {
-                lhs += "2"
-            }
-            else
-            {
-                rhs += "2"
-            }
-            final += "2"
-            exp.setText(final)
+            setNumber("2")
         })
         three.setOnClickListener({
-            if(op === "")
-            {
-                lhs += "3"
-            }
-            else
-            {
-                rhs += "3"
-            }
-            final += "3"
-            exp.setText(final)
+            setNumber("3")
         })
         four.setOnClickListener({
-            if(op === "")
-            {
-                lhs += "4"
-            }
-            else
-            {
-                rhs += "4"
-            }
-            final += "4"
-            exp.setText(final)
+            setNumber("4")
         })
         five.setOnClickListener({
-            if(op === "")
-            {
-                lhs += "5"
-            }
-            else
-            {
-                rhs += "5"
-            }
-            final += "5"
-            exp.setText(final)
+           setNumber("5")
         })
         six.setOnClickListener({
-            if(op === "")
-            {
-                lhs += "6"
-            }
-            else
-            {
-                rhs += "6"
-            }
-            final += "6"
-            exp.setText(final)
+            setNumber("6")
         })
         seven.setOnClickListener({
-            if(op === "")
-            {
-                lhs += "7"
-            }
-            else
-            {
-                rhs += "7"
-            }
-            final += "7"
-            exp.setText(final)
+            setNumber("7")
         })
         eight.setOnClickListener({
-            if(op === "")
-            {
-                lhs += "8"
-            }
-            else
-            {
-                rhs += "8"
-            }
-            final += "8"
-            exp.setText(final)
+            setNumber("8")
         })
         nine.setOnClickListener({
-            if(op === "")
-            {
-                lhs += "9"
-            }
-            else
-            {
-                rhs += "9"
-            }
-            final += "9"
-            exp.setText(final)
+            setNumber("9")
         })
         zero.setOnClickListener({
-            if(op === "")
-            {
-                lhs += "0"
-            }
-            else
-            {
-                rhs += "0"
-            }
-            final += "0"
-            exp.setText(final)
+            setNumber("0")
+        })
+        dot.setOnClickListener({
+            setNumber(".")
         })
         add.setOnClickListener({
-            op = "+"
-            final += "+"
-            exp.setText(final)
+            setOperator("+")
         })
         sub.setOnClickListener({
-            op = "-"
-            final += "-"
-            exp.setText(final)
+            setOperator("-")
         })
         mul.setOnClickListener({
-            op = "*"
-            final += "*"
-            exp.setText(final)
+            setOperator("*")
         })
         div.setOnClickListener({
-            op = "/"
-            final += "/"
-            exp.setText(final)
+            setOperator("/")
 
         })
         mode.setOnClickListener({
-            op = "%"
-            final += "%"
-            exp.setText(final)
-        })
-        dot.setOnClickListener({
-            if(op === "")
-            {
-                lhs += "."
-            }
-            else
-            {
-                rhs += "."
-            }
-            final += "."
-            exp.setText(final)
+            setOperator("%")
         })
         equal.setOnClickListener({
-            if(op === "+")
-            {
+            calculateResult()
+        })
+        del.setOnClickListener({
+            removeLast()
+        })
+        ac.setOnClickListener({
+            clearAll()
+        })
+
+    }
+    private fun setNumber(num:String)
+    {
+        if(op == "")
+        {
+            lhs += num
+        }
+        else
+        {
+            rhs += num
+        }
+        final += num
+        exp.text = final
+    }
+    private fun setOperator(operator:String)
+    {
+        op = operator
+        final += operator
+        exp.text = final
+    }
+    private fun calculateResult()
+    {
+        when(op)
+        {
+            "+" -> {
                 var temp1 = lhs.toDouble()
                 var temp2 = rhs.toDouble()
                 var tempResult = temp1 + temp2
                 tempResult = String.format("%.1f", tempResult).toDouble()
-                res.setText(tempResult.toString())
+                res.text = tempResult.toString()
             }
-            else if(op === "-")
-            {
+            "-" -> {
                 var temp1 = lhs.toDouble()
                 var temp2 = rhs.toDouble()
                 var tempResult = temp1 - temp2
                 tempResult = String.format("%.1f", tempResult).toDouble()
-                res.setText(tempResult.toString())
+                res.text = tempResult.toString()
             }
-            else if(op === "*")
-            {
+            "*" -> {
                 var temp1 = lhs.toDouble()
                 var temp2 = rhs.toDouble()
                 var tempResult = temp1 * temp2
                 tempResult = String.format("%.1f", tempResult).toDouble()
-                res.setText(tempResult.toString())
+                res.text = tempResult.toString()
             }
-            else if(op === "/")
-            {
+            "/" -> {
                 var temp1 = lhs.toDouble()
                 var temp2 = rhs.toDouble()
                 var tempResult = temp1 / temp2
                 tempResult = String.format("%.1f", tempResult).toDouble()
-                res.setText(tempResult.toString())
+                res.text = tempResult.toString()
             }
-            else if(op === "%")
-            {
+            "%" -> {
                 var temp1 = lhs.toDouble()
                 var temp2 = rhs.toDouble()
                 var tempResult = temp1 % temp2
                 tempResult = String.format("%.1f", tempResult).toDouble()
-                res.setText(tempResult.toString())
+                res.text = tempResult.toString()
             }
-        })
-        del.setOnClickListener({
-            var size = lhs.length-1
-            var size2 = rhs.length-1
-            if(rhs === "" && lhs != "")
-            {
-                var temp_lhs = ""
-                for (i in 0..size)
-                {
-                    temp_lhs += lhs[i]
-                }
-                lhs = temp_lhs
-            }
-            else if (rhs != "")
-            {
-                var temp_rhs = ""
-                for (i in 0..size2)
-                {
-                    temp_rhs += lhs[i]
-                }
-                rhs = temp_rhs
-            }
-            var s3 = final.length-1
-            var final_temp = ""
-            for(j in 0..s3)
-            {
-                final_temp = final[j].toString()
-            }
-            final = final_temp
-            exp.setText(final)
-        })
-        ac.setOnClickListener({
-            exp.setText("")
-            lhs = ""
-            rhs = ""
-            final = ""
-            op = ""
-            res.setText("0")
-        })
-
+        }
+    }
+    private fun removeLast()
+    {
+        val size = exp.length()
+        if(size > 0)
+        {
+            exp.text = exp.text.subSequence(0,size-1)
+        }
+        if(final != "")
+        {
+            final = final.dropLast(1)
+        }
+        if(rhs == "" && op == "")
+        {
+            lhs = lhs.dropLast(1)
+        }
+        else if(rhs != "")
+        {
+            rhs = rhs.dropLast(1)
+        }
+        else
+        {
+            op = op.dropLast(1)
+        }
+    }
+    private fun clearAll()
+    {
+        exp.text = ""
+        lhs = ""
+        rhs = ""
+        final = ""
+        op = ""
+        res.text = "0"
     }
 }
