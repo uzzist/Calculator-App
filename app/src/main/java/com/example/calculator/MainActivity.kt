@@ -5,174 +5,111 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
+import net.objecthunter.exp4j.Expression
+import net.objecthunter.exp4j.ExpressionBuilder
 
 class MainActivity : AppCompatActivity() {
     
-    lateinit var lhs:String
-    lateinit var rhs:String
-    lateinit var op:String
-    lateinit var final:String
+    private var operation = false
+    private var decimal = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        lhs = ""
-        rhs = ""
-        op = ""
-        final = ""
+
 
         one.setOnClickListener({
-            setNumber("1")
+            myEvaluater("1",true)
         })
         two.setOnClickListener({
-            setNumber("2")
+            myEvaluater("2",true)
         })
         three.setOnClickListener({
-            setNumber("3")
+            myEvaluater("3",true)
         })
         four.setOnClickListener({
-            setNumber("4")
+            myEvaluater("4",true)
         })
         five.setOnClickListener({
-           setNumber("5")
+            myEvaluater("5",true)
         })
         six.setOnClickListener({
-            setNumber("6")
+            myEvaluater("6",true)
         })
         seven.setOnClickListener({
-            setNumber("7")
+            myEvaluater("7",true)
         })
         eight.setOnClickListener({
-            setNumber("8")
+            myEvaluater("8",true)
         })
         nine.setOnClickListener({
-            setNumber("9")
+            myEvaluater("9",true)
         })
         zero.setOnClickListener({
-            setNumber("0")
+            myEvaluater("0",true)
         })
         dot.setOnClickListener({
-            setNumber(".")
+            myEvaluater(".",true)
         })
         add.setOnClickListener({
-            setOperator("+")
+            myEvaluater("+",true)
         })
         sub.setOnClickListener({
-            setOperator("-")
+            myEvaluater("-",true)
         })
         mul.setOnClickListener({
-            setOperator("*")
+            myEvaluater("*",true)
         })
         div.setOnClickListener({
-            setOperator("/")
-
+            myEvaluater("/",true)
         })
         mode.setOnClickListener({
-            setOperator("%")
+            myEvaluater("%",true)
         })
         equal.setOnClickListener({
-            calculateResult()
+            val text = exp.text.toString()
+            val expression = ExpressionBuilder(text).build()
+            val result = expression.evaluate().toDouble()
+            val longResult = result.toLong()
+            if(result == longResult.toDouble())
+            {
+                res.text = longResult.toString()
+            }
+            else
+            {
+                res.text = result.toString()
+            }
+
         })
         del.setOnClickListener({
-            removeLast()
+            val text = exp.text.toString()
+            if(text.isNotEmpty())
+            {
+                exp.text = text.dropLast(1)
+            }
+            res.text = ""
         })
         ac.setOnClickListener({
-            clearAll()
+            exp.text = ""
+            res.text = "0"
         })
 
     }
-    private fun setNumber(num:String)
+
+    fun myEvaluater(string:String, clear:Boolean)
     {
-        if(op == "")
+        if(clear)
         {
-            lhs += num
+            res.text = ""
+            exp.append(string)
         }
         else
         {
-            rhs += num
-        }
-        final += num
-        exp.text = final
-    }
-    private fun setOperator(operator:String)
-    {
-        op = operator
-        final += operator
-        exp.text = final
-    }
-    private fun calculateResult()
-    {
-        when(op)
-        {
-            "+" -> {
-                var temp1 = lhs.toDouble()
-                var temp2 = rhs.toDouble()
-                var tempResult = temp1 + temp2
-                tempResult = String.format("%.1f", tempResult).toDouble()
-                res.text = tempResult.toString()
-            }
-            "-" -> {
-                var temp1 = lhs.toDouble()
-                var temp2 = rhs.toDouble()
-                var tempResult = temp1 - temp2
-                tempResult = String.format("%.1f", tempResult).toDouble()
-                res.text = tempResult.toString()
-            }
-            "*" -> {
-                var temp1 = lhs.toDouble()
-                var temp2 = rhs.toDouble()
-                var tempResult = temp1 * temp2
-                tempResult = String.format("%.1f", tempResult).toDouble()
-                res.text = tempResult.toString()
-            }
-            "/" -> {
-                var temp1 = lhs.toDouble()
-                var temp2 = rhs.toDouble()
-                var tempResult = temp1 / temp2
-                tempResult = String.format("%.1f", tempResult).toDouble()
-                res.text = tempResult.toString()
-            }
-            "%" -> {
-                var temp1 = lhs.toDouble()
-                var temp2 = rhs.toDouble()
-                var tempResult = temp1 % temp2
-                tempResult = String.format("%.1f", tempResult).toDouble()
-                res.text = tempResult.toString()
-            }
+            exp.append(res.text)
+            exp.append(string)
+            res.text = ""
         }
     }
-    private fun removeLast()
-    {
-        val size = exp.length()
-        if(size > 0)
-        {
-            exp.text = exp.text.subSequence(0,size-1)
-        }
-        if(final != "")
-        {
-            final = final.dropLast(1)
-        }
-        if(rhs == "" && op == "")
-        {
-            lhs = lhs.dropLast(1)
-        }
-        else if(rhs != "")
-        {
-            rhs = rhs.dropLast(1)
-        }
-        else
-        {
-            op = op.dropLast(1)
-        }
-    }
-    private fun clearAll()
-    {
-        exp.text = ""
-        lhs = ""
-        rhs = ""
-        final = ""
-        op = ""
-        res.text = "0"
-    }
+
 }
